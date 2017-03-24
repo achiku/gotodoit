@@ -1,0 +1,6 @@
+alembic==0.8.10
+awscli==1.11.30
+psycopg2==2.6.2
+SQLAlchemy==1.1.5
+factory_boy==2.8.1
+pytest==3.0.6

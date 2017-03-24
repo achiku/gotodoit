@@ -1,0 +1,9 @@
+session_name: gotodoit-dev-pane
+windows:
+- window_name: gotodoit-dev-services
+  layout: tiled
+  shell_command_before:
+    - cd $GOPATH/src/github.com/achiku/gotodoit
+  panes:
+    - cd ./cmd/gotodo-server && gom exec wbs -c wbs.toml
+    - cd ./cmd/estc-server && gom exec wbs -c wbs.toml

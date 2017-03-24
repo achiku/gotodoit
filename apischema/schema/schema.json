@@ -1,0 +1,348 @@
+{
+  "$schema": "http://interagent.github.io/interagent-hyper-schema",
+  "type": [
+    "object"
+  ],
+  "definitions": {
+    "healthcheck": {
+      "$schema": "http://json-schema.org/draft-04/hyper-schema",
+      "title": "healthcheck",
+      "description": "healthcheck",
+      "stability": "prototype",
+      "strictProperties": true,
+      "type": [
+        "object"
+      ],
+      "definitions": {
+        "message": {
+          "description": "healthcheck message",
+          "example": "ok 2017-03-20 11:05:59.679185 +0000 UTC",
+          "readOnly": true,
+          "format": "uuid",
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "links": [
+        {
+          "description": "healthcheck",
+          "href": "/healthcheck",
+          "title": "healthcheck",
+          "method": "GET",
+          "rel": "self"
+        }
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/healthcheck/definitions/message"
+        }
+      },
+      "required": [
+        "message"
+      ]
+    },
+    "todo": {
+      "$schema": "http://json-schema.org/draft-04/hyper-schema",
+      "title": "todo",
+      "description": "todo",
+      "stability": "prototype",
+      "strictProperties": true,
+      "type": [
+        "object"
+      ],
+      "definitions": {
+        "id": {
+          "description": "todo id",
+          "example": "ec0a1edc-062e-11e7-8b1e-040ccee2aa06",
+          "readOnly": true,
+          "format": "uuid",
+          "type": [
+            "string"
+          ]
+        },
+        "userId": {
+          "$ref": "#/definitions/user/definitions/id"
+        },
+        "identity": {
+          "$ref": "#/definitions/todo/definitions/id"
+        },
+        "name": {
+          "description": "todo name",
+          "example": "buy milk",
+          "readOnly": true,
+          "type": [
+            "string"
+          ]
+        },
+        "totalDuration": {
+          "description": "total time spent in sec",
+          "example": 120,
+          "readOnly": true,
+          "type": [
+            "integer"
+          ]
+        },
+        "startedAt": {
+          "description": "time this todo is started",
+          "format": "date-time",
+          "example": "2016-02-01T12:13:14Z",
+          "readOnly": true,
+          "type": [
+            "string"
+          ]
+        },
+        "stoppedAt": {
+          "description": "time this todo is stopped",
+          "format": "date-time",
+          "example": "2016-02-01T12:13:14Z",
+          "readOnly": true,
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "links": [
+        {
+          "description": "get todo detail",
+          "href": "/todos/{(%23%2Fdefinitions%2Ftodo%2Fdefinitions%2Fidentity)}",
+          "title": "get todo detail",
+          "method": "GET",
+          "rel": "self"
+        },
+        {
+          "description": "create todo",
+          "href": "/todos",
+          "title": "create todo",
+          "method": "POST",
+          "rel": "create",
+          "schema": {
+            "properties": {
+              "name": {
+                "$ref": "#/definitions/todo/definitions/name"
+              },
+              "userId": {
+                "$ref": "#/definitions/todo/definitions/userId"
+              }
+            },
+            "required": [
+              "name",
+              "userId"
+            ],
+            "type": [
+              "object"
+            ]
+          },
+          "targetSchema": {
+            "$ref": "#/definitions/todo",
+            "type": [
+              "object"
+            ]
+          }
+        },
+        {
+          "description": "get todos",
+          "href": "/todos",
+          "title": "get todos",
+          "method": "GET",
+          "rel": "instances",
+          "schema": {
+            "properties": {
+              "limit": {
+                "description": "limit",
+                "example": 20,
+                "type": [
+                  "integer"
+                ]
+              },
+              "offset": {
+                "description": "offset",
+                "example": 20,
+                "type": [
+                  "integer"
+                ]
+              }
+            },
+            "type": [
+              "object"
+            ]
+          },
+          "targetSchema": {
+            "items": {
+              "$ref": "#/definitions/todo"
+            },
+            "type": [
+              "array"
+            ]
+          }
+        }
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/todo/definitions/id"
+        },
+        "name": {
+          "$ref": "#/definitions/todo/definitions/name"
+        },
+        "totalDuration": {
+          "$ref": "#/definitions/todo/definitions/totalDuration"
+        },
+        "startedAt": {
+          "$ref": "#/definitions/todo/definitions/startedAt"
+        },
+        "stoppedAt": {
+          "$ref": "#/definitions/todo/definitions/stoppedAt"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "totalDuration",
+        "startedAt",
+        "completedAt"
+      ]
+    },
+    "user": {
+      "$schema": "http://json-schema.org/draft-04/hyper-schema",
+      "title": "user",
+      "description": "user",
+      "stability": "prototype",
+      "strictProperties": true,
+      "type": [
+        "object"
+      ],
+      "definitions": {
+        "id": {
+          "description": "user id",
+          "example": "ec0a1edc-062e-11e7-8b1e-040ccee2aa06",
+          "readOnly": true,
+          "format": "uuid",
+          "type": [
+            "string"
+          ]
+        },
+        "identity": {
+          "$ref": "#/definitions/user/definitions/id"
+        },
+        "username": {
+          "description": "user name",
+          "example": "8maki",
+          "readOnly": true,
+          "type": [
+            "string"
+          ]
+        },
+        "email": {
+          "description": "user email",
+          "example": "8maki@gmail.com",
+          "readOnly": true,
+          "type": [
+            "string"
+          ]
+        },
+        "password": {
+          "description": "user password",
+          "example": "Abcd1234!",
+          "readOnly": true,
+          "type": [
+            "string"
+          ]
+        },
+        "token": {
+          "description": "access token",
+          "example": "yn7BNLfLcThNJxgs13WlnCTNTa0tbpkqaMTHgLFQxLh7mXNXCE",
+          "readOnly": true,
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "links": [
+        {
+          "description": "create user",
+          "href": "/users",
+          "title": "sign up",
+          "method": "POST",
+          "rel": "create",
+          "schema": {
+            "properties": {
+              "username": {
+                "$ref": "#/definitions/user/definitions/username"
+              },
+              "email": {
+                "$ref": "#/definitions/user/definitions/email"
+              },
+              "password": {
+                "$ref": "#/definitions/user/definitions/password"
+              }
+            },
+            "required": [
+              "username",
+              "email",
+              "password"
+            ],
+            "type": [
+              "object"
+            ]
+          },
+          "targetSchema": {
+            "properties": {
+              "user": {
+                "$ref": "#/definitions/user"
+              },
+              "token": {
+                "$ref": "#/definitions/user/definitions/token"
+              }
+            },
+            "type": [
+              "object"
+            ]
+          }
+        },
+        {
+          "description": "get user detail",
+          "href": "/users/me",
+          "title": "user detail",
+          "method": "GET",
+          "rel": "self"
+        }
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/user/definitions/id"
+        },
+        "username": {
+          "$ref": "#/definitions/user/definitions/username"
+        },
+        "email": {
+          "$ref": "#/definitions/user/definitions/email"
+        }
+      },
+      "required": [
+        "id",
+        "username",
+        "email"
+      ]
+    }
+  },
+  "properties": {
+    "healthcheck": {
+      "$ref": "#/definitions/healthcheck"
+    },
+    "todo": {
+      "$ref": "#/definitions/todo"
+    },
+    "user": {
+      "$ref": "#/definitions/user"
+    }
+  },
+  "description": "gotodo API",
+  "id": "gotodo",
+  "links": [
+    {
+      "href": "https://gotodo.io/v1",
+      "rel": "self"
+    }
+  ],
+  "title": "gotodo API JSON Schema"
+}

@@ -1,0 +1,6 @@
+description: gotodo API
+id: gotodo
+links:
+  - href: https://gotodo.io/v1
+    rel: self
+title: gotodo API JSON Schema

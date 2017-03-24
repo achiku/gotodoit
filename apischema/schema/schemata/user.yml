@@ -1,0 +1,87 @@
+---
+"$schema": http://json-schema.org/draft-04/hyper-schema
+title: user
+description: user
+stability: prototype
+strictProperties: true
+type:
+  - object
+definitions:
+  id:
+    description: user id
+    example: "ec0a1edc-062e-11e7-8b1e-040ccee2aa06"
+    readOnly: true
+    format: uuid
+    type:
+      - string
+  identity:
+    $ref: "/schemata/user#/definitions/id"
+  username:
+    description: user name
+    example: "8maki"
+    readOnly: true
+    type:
+      - string
+  email:
+    description: user email
+    example: "8maki@gmail.com"
+    readOnly: true
+    type:
+      - string
+  password:
+    description: user password
+    example: "Abcd1234!"
+    readOnly: true
+    type:
+      - string
+  token:
+    description: access token
+    example: "yn7BNLfLcThNJxgs13WlnCTNTa0tbpkqaMTHgLFQxLh7mXNXCE"
+    readOnly: true
+    type:
+      - string
+links:
+  - description: "create user"
+    href: "/users"
+    title: sign up
+    method: POST
+    rel: create
+    schema:
+      properties:
+        username:
+          $ref: "/schemata/user#/definitions/username"
+        email:
+          $ref: "/schemata/user#/definitions/email"
+        password:
+          $ref: "/schemata/user#/definitions/password"
+      required:
+        - username
+        - email
+        - password
+      type:
+        - object
+    targetSchema:
+      properties:
+        user:
+          $ref: "/schemata/user"
+        token:
+          $ref: "/schemata/user#/definitions/token"
+      type:
+        - object
+  - description: "get user detail"
+    href: "/users/me"
+    title: user detail
+    method: GET
+    rel: self
+properties:
+  id:
+    $ref: "/schemata/user#/definitions/id"
+  username:
+    $ref: "/schemata/user#/definitions/username"
+  email:
+    $ref: "/schemata/user#/definitions/email"
+required:
+  - id
+  - username
+  - email
+id: schemata/user

@@ -1,0 +1,28 @@
+---
+"$schema": http://json-schema.org/draft-04/hyper-schema
+title: healthcheck
+description: healthcheck 
+stability: prototype
+strictProperties: true
+type:
+  - object
+definitions:
+  message:
+    description: healthcheck message
+    example: "ok 2017-03-20 11:05:59.679185 +0000 UTC"
+    readOnly: true
+    format: uuid
+    type:
+      - string
+links:
+  - description: "healthcheck"
+    href: "/healthcheck"
+    title: healthcheck
+    method: GET
+    rel: self
+properties:
+  message:
+    $ref: "/schemata/healthcheck#/definitions/message"
+required:
+  - message
+id: schemata/healthcheck

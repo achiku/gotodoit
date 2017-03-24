@@ -1,0 +1,13 @@
+root_path = "."
+
+watch_target_dirs = ["../../"]
+watch_exclude_dirs = [".git", "vendor", "bin"]
+watch_file_ext = [".go"]
+
+build_target_dir = "../../bin"
+build_target_name = "estc-server"
+build_command = "go"
+build_options = ["build", "-v"]
+
+start_options = ["-p", "8509"]
+restart_process = true
