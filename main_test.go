@@ -53,24 +53,19 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func testSetupApp(t *testing.T) (*App, model.Txer, context.Context, func()) {
+func testSetupApp(t *testing.T) (*App, model.DBer, context.Context, func()) {
 	config, err := NewConfig("./conf/test.toml")
 	if err != nil {
 		t.Fatal(err)
 	}
 	db, cleanup := model.TestSetupDB(t)
-	tx, err := db.Begin()
-	if err != nil {
-		t.Fatal(err)
-	}
 
 	app := &App{
 		Config: config,
 		DB:     db,
 	}
 	ctx := context.Background()
-	return app, tx, ctx, func() {
-		tx.Rollback()
+	return app, db, ctx, func() {
 		cleanup()
 	}
 }

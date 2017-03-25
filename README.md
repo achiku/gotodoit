@@ -13,6 +13,7 @@ brew install go
 brew install python3
 ```
 
+##### PostgreSQL
 ```sql
 -- psql -U admin -d template1
 CREATE database gotodoit;
@@ -27,8 +28,15 @@ CREATE USER gotodoit_api_test;
 CREATE SCHEMA gotodoit_api AUTHORIZATION gotodoit_api;
 ```
 
+##### Python
 ```
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements/development.txt
+```
+
+##### Go
+```
+go get -u github.com/mattn/gom
+gom install
 ```

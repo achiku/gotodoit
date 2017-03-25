@@ -50,9 +50,11 @@ func TestGetTodos(t *testing.T) {
 	ts := httptest.NewServer(estc.TestNewMux(estc.DefaultHandlerMap))
 	defer ts.Close()
 
-	app.EstcClient = estc.NewClient(estc.TestNewConfig(ts.URL), &http.Client{}, nil)
+	app.EstcClient = estc.NewClient(
+		estc.TestNewConfig(ts.URL), &http.Client{}, nil)
 	req := testCreateRequest(t, "GET", "/v1/todos", nil).WithContext(
-		context.WithValue(ctx, ctxKeyAuth, AuthModel{Token: "token", User: u}),
+		context.WithValue(
+			ctx, ctxKeyAuth, AuthModel{Token: "dummy", User: u}),
 	)
 	wr := httptest.NewRecorder()
 	status, res, err := app.GetTodos(wr, req)
