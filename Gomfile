@@ -1,0 +1,16 @@
+gom 'github.com/jackc/pgx'
+gom 'github.com/justinas/alice'
+gom 'github.com/rs/xlog'
+gom 'github.com/BurntSushi/toml'
+gom 'github.com/pkg/errors'
+gom 'github.com/achiku/mux'
+gom 'github.com/satori/go.uuid'
+gom 'golang.org/x/crypto/bcrypt'
+
+group :development do
+    gom 'github.com/achiku/pgtxdb'
+    gom 'github.com/achiku/wbs'
+    gom 'github.com/achiku/hseq'
+    gom 'github.com/achiku/ovw'
+    gom 'github.com/achiku/dgw'
+end

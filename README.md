@@ -40,9 +40,9 @@ pipenv install --dev
 
 ##### Go
 
-- https://github.com/golang/dep
+- https://github.com/mattn/gom
 
 ```
-go get -u github.com/golang/dep
-dep ensure
+go get -u github.com/mattn/gom
+gom install
 ```
