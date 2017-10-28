@@ -29,14 +29,20 @@ CREATE SCHEMA gotodoit_api AUTHORIZATION gotodoit_api;
 ```
 
 ##### Python
+
+- https://github.com/kennethreitz/pipenv
+
 ```
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements/development.txt
+pipenv --python 3.6
+pipenv shell
+pipenv install --dev
 ```
 
 ##### Go
+
+- https://github.com/golang/dep
+
 ```
-go get -u github.com/mattn/gom
-gom install
+go get -u github.com/golang/dep
+dep ensure
 ```

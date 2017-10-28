@@ -1,0 +1,29 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+alembic = "*"
+awscli = "*"
+psycopg2 = "*"
+SQLAlchemy = "*"
+
+
+[dev-packages]
+autopep8 = "*" 
+flake8 = "*"
+isort = "*"
+tmuxp = "*"
+pep8 = "*"
+ipython = "*"
+pytest = "*"
+factory_boy = "*" 
+
+
+
+[requires]
+
+python_version = "3.6"
