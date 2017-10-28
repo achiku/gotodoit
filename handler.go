@@ -50,7 +50,7 @@ func (app *App) GetTodos(w http.ResponseWriter, r *http.Request) (int, interface
 	}
 	var res iapi.TodoInstancesResponse
 	for _, t := range tds {
-		res = append(res, iapi.TodoSelfResponse{
+		res = append(res, iapi.Todo{
 			ID:            t.UUID,
 			Name:          t.Name,
 			TotalDuration: t.Duration,

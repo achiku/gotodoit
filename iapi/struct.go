@@ -1,72 +1,73 @@
 package iapi
 
-import (
-	"time"
-)
+import "time"
 
-// Healthcheck healthcheck resource
+// Healthcheck struct for healthcheck resource
 type Healthcheck struct {
-	Message string `json:"message" schema:"message"`
+	Message string `json:"message"`
 }
 
-// Todo todo resource
+// Todo struct for todo resource
 type Todo struct {
-	ID            string    `json:"id" schema:"id"`
-	Name          string    `json:"name" schema:"name"`
-	StartedAt     time.Time `json:"startedAt" schema:"startedAt"`
-	StoppedAt     time.Time `json:"stoppedAt,omitempty" schema:"stoppedAt"`
-	TotalDuration int64     `json:"totalDuration" schema:"totalDuration"`
+	ID            string    `json:"id"`
+	Name          string    `json:"name"`
+	StartedAt     time.Time `json:"startedAt"`
+	StoppedAt     time.Time `json:"stoppedAt,omitempty"`
+	TotalDuration int64     `json:"totalDuration"`
 }
 
-// User user resource
+// User struct for user resource
 type User struct {
-	Email    string `json:"email" schema:"email"`
-	ID       string `json:"id" schema:"id"`
-	Username string `json:"username" schema:"username"`
+	Email    string `json:"email"`
+	ID       string `json:"id"`
+	Username string `json:"username"`
 }
 
-// HealthcheckSelfResponse response
+// HealthcheckSelfResponse struct for healthcheck
+// GET: /healthcheck
 type HealthcheckSelfResponse Healthcheck
 
-// TodoCreateRequest request
-type TodoCreateRequest struct {
-	Name   string `json:"name" schema:"name"`
-	UserID string `json:"userId" schema:"userId"`
-}
-
-// TodoCreateResponse response
-type TodoCreateResponse Todo
-
-// TodoInstancesRequest request
+// TodoInstancesRequest struct for todo
+// GET: /todos
 type TodoInstancesRequest struct {
 	Limit  int64 `json:"limit,omitempty" schema:"limit"`
 	Offset int64 `json:"offset,omitempty" schema:"offset"`
 }
 
-// TodoInstancesResponse response
-type TodoInstancesResponse []struct {
-	ID            string    `json:"id" schema:"id"`
-	Name          string    `json:"name" schema:"name"`
-	StartedAt     time.Time `json:"startedAt" schema:"startedAt"`
-	StoppedAt     time.Time `json:"stoppedAt,omitempty" schema:"stoppedAt"`
-	TotalDuration int64     `json:"totalDuration" schema:"totalDuration"`
-}
+// TodoInstancesResponse struct for todo
+// GET: /todos
+type TodoInstancesResponse []Todo
 
-// TodoSelfResponse response
+// TodoSelfResponse struct for todo
+// GET: /todos/{(#/definitions/todo/definitions/identity)}
 type TodoSelfResponse Todo
 
-// UserCreateRequest request
-type UserCreateRequest struct {
-	Email    string `json:"email" schema:"email"`
-	Password string `json:"password" schema:"password"`
-	Username string `json:"username" schema:"username"`
+// TodoCreateRequest struct for todo
+// POST: /todos
+type TodoCreateRequest struct {
+	Name   string `json:"name"`
+	UserID string `json:"userId,omitempty"`
 }
 
-// UserCreateResponse response
-type UserCreateResponse struct {
-	Token string `json:"token,omitempty" schema:"token"`
-	User  *User  `json:"user,omitempty" schema:"user"`
-}
+// TodoCreateResponse struct for todo
+// POST: /todos
+type TodoCreateResponse Todo
 
-// UserSelfResponse response
+// UserSelfResponse struct for user
+// GET: /users/me
 type UserSelfResponse User
+
+// UserCreateRequest struct for user
+// POST: /users
+type UserCreateRequest struct {
+	Email    string `json:"email"`
+	Password string `json:"password,omitempty"`
+	Username string `json:"username"`
+}
+
+// UserCreateResponse struct for user
+// POST: /users
+type UserCreateResponse struct {
+	Token string `json:"token,omitempty"`
+	User  *User  `json:"user,omitempty"`
+}
