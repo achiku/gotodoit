@@ -256,7 +256,7 @@ HTTP/1.1 201 Created
 }
 ```
 
-### <a name="link-GET-user-/users/me">user user detail</a>
+### <a name="link-GET-user-/users/me">user detail</a>
 
 get user detail
 
@@ -283,6 +283,50 @@ HTTP/1.1 200 OK
   "id": "ec0a1edc-062e-11e7-8b1e-040ccee2aa06",
   "username": "8maki",
   "email": "8maki@gmail.com"
+}
+```
+
+### <a name="link-PATCH-user-/users/me">user detail</a>
+
+update user detail
+
+```
+PATCH /users/me
+```
+
+#### Optional Parameters
+
+| Name | Type | Description | Example |
+| ------- | ------- | ------- | ------- |
+| **email** | *string* | user email | `"8maki@gmail.com"` |
+| **username** | *string* | user name | `"8maki"` |
+
+
+#### Curl Example
+
+```bash
+$ curl -n -X PATCH https://gotodo.io/v1/users/me \
+  -d '{
+  "username": "8maki",
+  "email": "8maki@gmail.com"
+}' \
+  -H "Content-Type: application/json"
+```
+
+
+#### Response Example
+
+```
+HTTP/1.1 200 OK
+```
+
+```json
+{
+  "user": {
+    "id": "ec0a1edc-062e-11e7-8b1e-040ccee2aa06",
+    "username": "8maki",
+    "email": "8maki@gmail.com"
+  }
 }
 ```
 

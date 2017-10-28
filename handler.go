@@ -10,7 +10,7 @@ import (
 )
 
 // Healthcheck healthcheck
-func (app *App) Healthcheck(
+func (app *APIApp) Healthcheck(
 	w http.ResponseWriter, r *http.Request) (int, interface{}, error) {
 	m, err := service.Healthcheck(app.DB)
 	if err != nil {
@@ -24,7 +24,7 @@ func (app *App) Healthcheck(
 }
 
 // GetUserDetail get user
-func (app *App) GetUserDetail(
+func (app *APIApp) GetUserDetail(
 	w http.ResponseWriter, r *http.Request) (int, interface{}, error) {
 	auth := getAuthData(r.Context())
 	u, err := service.GetUserByID(app.DB, auth.User.UUID)
@@ -41,7 +41,7 @@ func (app *App) GetUserDetail(
 }
 
 // GetTodos get todos
-func (app *App) GetTodos(w http.ResponseWriter, r *http.Request) (int, interface{}, error) {
+func (app *APIApp) GetTodos(w http.ResponseWriter, r *http.Request) (int, interface{}, error) {
 	auth := getAuthData(r.Context())
 	tds, err := service.GetTodosByUserID(r.Context(), app.DB, app.EstcClient, auth.User.UUID, false)
 	if err != nil {
@@ -61,10 +61,10 @@ func (app *App) GetTodos(w http.ResponseWriter, r *http.Request) (int, interface
 }
 
 // GetTodoByID get todo by id
-func (app *App) GetTodoByID(w http.ResponseWriter, r *http.Request) (int, interface{}, error) {
+func (app *APIApp) GetTodoByID(w http.ResponseWriter, r *http.Request) (int, interface{}, error) {
 	todoID := mux.Vars(r)["todoID"]
 	auth := getAuthData(r.Context())
-	td, found, err := service.GetUserTodoByID(
+	td, found, err := service.GetUserEstimatedTodoByID(
 		r.Context(), app.DB, app.EstcClient, auth.User.UUID, todoID)
 	if err != nil {
 		c, e := iapi.NewInternalServerError()

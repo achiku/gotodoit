@@ -70,9 +70,26 @@ links:
         - object
   - description: "get user detail"
     href: "/users/me"
-    title: user detail
+    title: detail
     method: GET
     rel: self
+  - description: "update user detail"
+    href: "/users/me"
+    title: detail
+    method: PATCH
+    rel: self
+    schema:
+      properties:
+        username:
+          $ref: "/schemata/user#/definitions/username"
+        email:
+          $ref: "/schemata/user#/definitions/email"
+      type:
+        - object
+    targetSchema:
+      properties:
+        user:
+          $ref: "/schemata/user"
 properties:
   id:
     $ref: "/schemata/user#/definitions/id"

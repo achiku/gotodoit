@@ -40,8 +40,8 @@ func GetTodosByUserID(
 	return ttds, nil
 }
 
-// GetUserTodoByID get todo by id
-func GetUserTodoByID(
+// GetUserEstimatedTodoByID get todo by id
+func GetUserEstimatedTodoByID(
 	ctx context.Context, db model.Queryer, c *estc.Client, userID, todoID string) (*Todo, bool, error) {
 	td, found, err := model.GetUserTodoByID(db, userID, todoID)
 	if err != nil {
@@ -63,4 +63,17 @@ func GetUserTodoByID(
 		EstimatedTime: etc.Time,
 	}
 	return t, true, nil
+}
+
+// GetUserTodoByID get user todo by ID
+func GetUserTodoByID(
+	ctx context.Context, db model.Queryer, userID, todoID string) (*model.Todo, bool, error) {
+	td, found, err := model.GetUserTodoByID(db, userID, todoID)
+	if err != nil {
+		return nil, false, errors.Wrap(err, "model.GetUserTodoByID failed")
+	}
+	if !found {
+		return nil, false, nil
+	}
+	return td, true, nil
 }

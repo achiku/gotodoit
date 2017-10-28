@@ -117,8 +117,8 @@ type Task struct {
 	Difficulty int    `json:"difficulty"`
 }
 
-// ETC estimated time to complete
-type ETC struct {
+// ETCResponse estimated time to complete
+type ETCResponse struct {
 	StatusCode      int `json:"statusCode"`
 	Message         int `json:"message,omitempty"`
 	Time            int `json:"time,omitempty"`
@@ -126,10 +126,39 @@ type ETC struct {
 }
 
 // EstimateTimeToComplete estimate time to complete
-func (c *Client) EstimateTimeToComplete(ctx context.Context, req *Task) (*ETC, error) {
-	pathStr := "/api/v1/estimate-time"
+func (c *Client) EstimateTimeToComplete(ctx context.Context, req *Task) (*ETCResponse, error) {
+	pathStr := "/v1/estimate-time"
 	method := "GET"
-	var res ETC
+	var res ETCResponse
+	if err := c.call(ctx, method, pathStr, req, &res); err != nil {
+		return nil, errors.Wrapf(err, "%s:%s failed", method, pathStr)
+	}
+	if res.StatusCode != SuccessStatusCode {
+		return nil, errors.Errorf("StatusCode: %d", res.StatusCode)
+	}
+	return &res, nil
+}
+
+// UpdateUserRequest update ETC user request
+type UpdateUserRequest struct {
+	ID       string `json:"id"`
+	UserName string `json:"userName"`
+	Email    string `json:"email"`
+}
+
+// UpdateUserResponse update ETC user response
+type UpdateUserResponse struct {
+	ID         string `json:"id"`
+	UserName   string `json:"userName"`
+	Email      string `json:"email"`
+	StatusCode int    `json:"statusCode"`
+}
+
+// UpdateUser update ETC user info
+func (c *Client) UpdateUser(ctx context.Context, req *UpdateUserRequest) (*UpdateUserResponse, error) {
+	pathStr := "/v1/users"
+	method := "PATCH"
+	var res UpdateUserResponse
 	if err := c.call(ctx, method, pathStr, req, &res); err != nil {
 		return nil, errors.Wrapf(err, "%s:%s failed", method, pathStr)
 	}

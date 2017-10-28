@@ -9,6 +9,7 @@ import (
 	"os"
 	"testing"
 
+	"github.com/achiku/gotodoit/estc"
 	"github.com/achiku/gotodoit/model"
 )
 
@@ -53,19 +54,48 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func testSetupApp(t *testing.T) (*App, model.DBer, context.Context, func()) {
+func testSetupApp(t *testing.T) (*APIApp, model.DBer, context.Context, func()) {
 	config, err := NewConfig("./conf/test.toml")
 	if err != nil {
 		t.Fatal(err)
 	}
 	db, cleanup := model.TestSetupDB(t)
 
-	app := &App{
-		Config: config,
-		DB:     db,
+	app := &APIApp{
+		BaseApp: BaseApp{
+			Config: config,
+		},
+		DB: db,
 	}
 	ctx := context.Background()
 	return app, db, ctx, func() {
+		cleanup()
+	}
+}
+
+func testSetupJobApp(t *testing.T) (*JobApp, model.Txer, context.Context, func()) {
+	config, err := NewConfig("./conf/test.toml")
+	if err != nil {
+		t.Fatal(err)
+	}
+	db, cleanup := model.TestSetupDB(t)
+
+	client := estc.NewClient(
+		config.EstcConfig, http.DefaultClient, log.New(os.Stdout, "[estc]:", log.Lshortfile))
+	app := &JobApp{
+		BaseApp: BaseApp{
+			Config:     config,
+			EstcClient: client,
+		},
+		Logger: log.New(os.Stdout, "[job]:", log.Lshortfile),
+	}
+	ctx := context.Background()
+	tx, err := db.Begin()
+	if err != nil {
+		t.Fatal(err)
+	}
+	return app, tx, ctx, func() {
+		tx.Rollback()
 		cleanup()
 	}
 }

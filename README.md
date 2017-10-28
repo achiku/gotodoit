@@ -1,6 +1,6 @@
 # gotodoit
 
-Sample Go HTTP API server for GoCon JP Sprint 2017
+Sample Go HTTP API server for GoCon JP Sprint 2017, and Fall 2018
 
 
 ### setup for macOS using brew

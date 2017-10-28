@@ -20,6 +20,7 @@ type Config struct {
 	DBPort         uint16       `toml:"db_port"`
 	DBSSLMode      string       `toml:"db_ssl_mode"`
 	PasswordPepper string       `toml:"password_pepper"`
+	NumWorkers     int          `toml:"num_workers"`
 	EstcConfig     *estc.Config `toml:"estc"`
 }
 

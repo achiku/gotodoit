@@ -61,7 +61,7 @@ func getAuthData(ctx context.Context) *AuthModel {
 	return &auth
 }
 
-func apiAuthMiddleware(app *App) func(next http.Handler) http.Handler {
+func apiAuthMiddleware(app *APIApp) func(next http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			logger := xlog.FromRequest(r)

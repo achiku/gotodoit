@@ -16,7 +16,7 @@ func TestClient_EstimateTimeToCompleteSimple(t *testing.T) {
 	f := func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(ETC{
+		json.NewEncoder(w).Encode(ETCResponse{
 			StatusCode:      SuccessStatusCode,
 			ConfidenceLevel: 10 * req.Difficulty,
 			Time:            1000,
@@ -60,7 +60,7 @@ func TestClient_EstimateTimeToComplete(t *testing.T) {
 	errHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(ETC{
+		json.NewEncoder(w).Encode(ETCResponse{
 			StatusCode: ErrorStatusCode,
 		})
 		return
@@ -73,7 +73,7 @@ func TestClient_EstimateTimeToComplete(t *testing.T) {
 	normalHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(ETC{
+		json.NewEncoder(w).Encode(ETCResponse{
 			StatusCode:      SuccessStatusCode,
 			ConfidenceLevel: 10,
 			Time:            1000,
@@ -83,7 +83,7 @@ func TestClient_EstimateTimeToComplete(t *testing.T) {
 	lowConfidenceHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(ETC{
+		json.NewEncoder(w).Encode(ETCResponse{
 			StatusCode:      SuccessStatusCode,
 			ConfidenceLevel: 1,
 			Time:            100000,

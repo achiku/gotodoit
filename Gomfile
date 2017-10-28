@@ -4,6 +4,7 @@ gom 'github.com/rs/xlog'
 gom 'github.com/BurntSushi/toml'
 gom 'github.com/pkg/errors'
 gom 'github.com/achiku/mux'
+gom 'github.com/achiku/qg'
 gom 'github.com/satori/go.uuid'
 gom 'golang.org/x/crypto/bcrypt'
 

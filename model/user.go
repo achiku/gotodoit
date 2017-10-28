@@ -58,3 +58,29 @@ func GetUserByAccessToken(tx Queryer, token string) (*TodoUser, bool, error) {
 	}
 	return &u, true, nil
 }
+
+// UpdateUser update user
+func UpdateUser(tx Queryer, user *TodoUser) error {
+	var u TodoUser
+	err := tx.QueryRow(`
+	update todo_user
+	set username = $1
+	    , email = $2
+	    , status = $3
+	where uuid = $4
+	returning 
+	    username
+	    , email
+	    , status
+	    , uuid
+	`, user.Username, user.Email, user.Status, user.UUID).Scan(
+		&u.Username,
+		&u.Email,
+		&u.Status,
+		&u.UUID,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}

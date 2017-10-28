@@ -11,11 +11,17 @@ import (
 	"github.com/rs/xlog"
 )
 
-// App application
-type App struct {
-	DB         model.DBer
+// BaseApp base app global values
+type BaseApp struct {
 	Config     *Config
 	EstcClient *estc.Client
+}
+
+// APIApp application
+type APIApp struct {
+	BaseApp
+	DB     model.DBer
+	Logger *log.Logger
 }
 
 // AppHandler internal
@@ -27,11 +33,10 @@ type AppHandler struct {
 func (ah AppHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	logger := xlog.FromRequest(r)
 	encoder := json.NewEncoder(w)
-	reqInfo := xlog.F{"http_request": r}
 
 	statusCode, res, err := ah.h(w, r)
 	if err != nil {
-		logger.Error(err, reqInfo)
+		logger.Error(err)
 		w.WriteHeader(statusCode)
 		encoder.Encode(res)
 		return
@@ -42,7 +47,7 @@ func (ah AppHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 // NewApp creates app
-func NewApp(cfgPath string) (*App, error) {
+func NewApp(cfgPath string) (*APIApp, error) {
 	cfg, err := NewConfig(cfgPath)
 	if err != nil {
 		return nil, err
@@ -57,10 +62,13 @@ func NewApp(cfgPath string) (*App, error) {
 		BaseEndpoint: cfg.EstcConfig.BaseEndpoint,
 		Debug:        cfg.EstcConfig.Debug,
 	}, &http.Client{}, log.New(os.Stdout, "[estc] ", log.LstdFlags))
-	app := &App{
-		DB:         db,
-		Config:     cfg,
-		EstcClient: estClient,
+	app := &APIApp{
+		BaseApp: BaseApp{
+			Config:     cfg,
+			EstcClient: estClient,
+		},
+		DB:     db,
+		Logger: log.New(os.Stdout, "[api-server] ", log.LstdFlags),
 	}
 	return app, nil
 }

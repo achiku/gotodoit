@@ -76,7 +76,7 @@ func TestTodo_GetUserTodoByID(t *testing.T) {
 	client := estc.NewClient(estc.TestNewConfig(ts.URL), &http.Client{}, nil)
 	ctx := context.Background()
 	for _, d := range data {
-		td, found, err := GetUserTodoByID(ctx, tx, client, u.UUID, d.ID)
+		td, found, err := GetUserEstimatedTodoByID(ctx, tx, client, u.UUID, d.ID)
 		if err != nil {
 			t.Fatal(err)
 		}

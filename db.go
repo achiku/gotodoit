@@ -19,7 +19,7 @@ func NewDB(cfg *Config) (model.DBer, error) {
 			Port:     cfg.DBPort,
 		},
 	}
-	stdlib.RegisterDriverConfig(dbCfg)
+	// stdlib.RegisterDriverConfig(dbCfg)
 	db, err := sql.Open("pgx", dbCfg.ConnectionString(""))
 	if err != nil {
 		return nil, err

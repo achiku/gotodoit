@@ -34,3 +34,8 @@ func CreateUser(tx model.Queryer, u *model.TodoUser) (*model.TodoUser, error) {
 	}
 	return u, nil
 }
+
+// UpdateUser update user
+func UpdateUser(tx model.Queryer, u *model.TodoUser) error {
+	return model.UpdateUser(tx, u)
+}

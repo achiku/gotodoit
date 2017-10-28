@@ -302,9 +302,36 @@
         {
           "description": "get user detail",
           "href": "/users/me",
-          "title": "user detail",
+          "title": "detail",
           "method": "GET",
           "rel": "self"
+        },
+        {
+          "description": "update user detail",
+          "href": "/users/me",
+          "title": "detail",
+          "method": "PATCH",
+          "rel": "self",
+          "schema": {
+            "properties": {
+              "username": {
+                "$ref": "#/definitions/user/definitions/username"
+              },
+              "email": {
+                "$ref": "#/definitions/user/definitions/email"
+              }
+            },
+            "type": [
+              "object"
+            ]
+          },
+          "targetSchema": {
+            "properties": {
+              "user": {
+                "$ref": "#/definitions/user"
+              }
+            }
+          }
         }
       ],
       "properties": {
