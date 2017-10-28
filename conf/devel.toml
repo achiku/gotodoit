@@ -3,7 +3,7 @@ server_port = "8508"
 db_host = "localhost"
 db_name = "gotodoit"
 db_user = "gotodoit_api"
-db_port = "5432"
+db_port = 5432
 db_ssl_mode = "disable"
 
 [estc]

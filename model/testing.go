@@ -10,21 +10,25 @@ import (
 	"testing"
 
 	txdb "github.com/achiku/pgtxdb"
+	"github.com/jackc/pgx"
+	_ "github.com/jackc/pgx/stdlib" // pgx
 )
 
 func init() {
-	txdb.Register("txdb", "postgres", "postgres://gotodoit_api_test@localhost:5432/gotodoit?sslmode=disable")
-}
-
-// ConnStr creates conn string from config
-func ConnStr(c DBConfig) string {
-	return fmt.Sprintf(
-		"postgres://%s:%s@localhost:%s/%s?sslmode=%s", c.User, c.UserPass, c.Port, c.DBName, c.SSLMode)
+	txdb.Register("txdb", "pgx", "postgres://gotodoit_api_test@localhost:5432/gotodoit?sslmode=disable")
 }
 
 // TestCreateSchema set up test schema
 func TestCreateSchema(cfg DBConfig, schema, user string) error {
-	db, err := sql.Open("postgres", ConnStr(cfg))
+	poolcfg := pgx.ConnPoolConfig{
+		ConnConfig: pgx.ConnConfig{
+			Host:     "localhost",
+			User:     cfg.User,
+			Database: cfg.DBName,
+			Port:     5432,
+		},
+	}
+	db, err := pgx.NewConnPool(poolcfg)
 	if err != nil {
 		return err
 	}
@@ -40,7 +44,15 @@ func TestCreateSchema(cfg DBConfig, schema, user string) error {
 
 // TestDropSchema set up test schema
 func TestDropSchema(cfg DBConfig, schema string) error {
-	db, err := sql.Open("postgres", ConnStr(cfg))
+	poolcfg := pgx.ConnPoolConfig{
+		ConnConfig: pgx.ConnConfig{
+			Host:     "localhost",
+			User:     cfg.User,
+			Database: cfg.DBName,
+			Port:     5432,
+		},
+	}
+	db, err := pgx.NewConnPool(poolcfg)
 	if err != nil {
 		return err
 	}
@@ -73,7 +85,15 @@ func TestCreateTables(cfg DBConfig, path string) error {
 		return err
 	}
 
-	db, err := sql.Open("postgres", ConnStr(cfg))
+	poolcfg := pgx.ConnPoolConfig{
+		ConnConfig: pgx.ConnConfig{
+			Host:     "localhost",
+			User:     cfg.User,
+			Database: cfg.DBName,
+			Port:     5432,
+		},
+	}
+	db, err := pgx.NewConnPool(poolcfg)
 	if err != nil {
 		return err
 	}

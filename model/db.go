@@ -2,10 +2,6 @@ package model
 
 import (
 	"database/sql"
-	"fmt"
-
-	_ "github.com/lib/pq" // sql database
-	"github.com/pkg/errors"
 )
 
 // DB database
@@ -43,14 +39,4 @@ type DBer interface {
 	Begin() (*sql.Tx, error)
 	Close() error
 	Ping() error
-}
-
-// NewDB creates DB
-func NewDB(c *DBConfig) (DBer, error) {
-	conStr := fmt.Sprintf("user=%s dbname=%s sslmode=%s", c.User, c.DBName, c.SSLMode)
-	db, err := sql.Open("postgres", conStr)
-	if err != nil {
-		return nil, errors.Wrap(err, "failed to create db")
-	}
-	return &DB{db}, nil
 }

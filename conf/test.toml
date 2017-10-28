@@ -3,5 +3,11 @@ server_port = "8501"
 db_host = "localhost"
 db_name = "gotodoit"
 db_user = "gotodoit_api_test"
-db_port = "5432"
+db_port = 5432
 db_ssl_mode = "disable"
+
+[estc]
+base_endpoint = "http://localhost:8509"
+api_key = "devapikey"
+api_secret = "devapisecret"
+debug = true

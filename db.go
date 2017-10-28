@@ -1,17 +1,26 @@
 package gotodoit
 
-import "github.com/achiku/gotodoit/model"
+import (
+	"database/sql"
+
+	"github.com/achiku/gotodoit/model"
+	"github.com/jackc/pgx"
+	"github.com/jackc/pgx/stdlib" // pgx
+)
 
 // NewDB creates db
 func NewDB(cfg *Config) (model.DBer, error) {
-	c := &model.DBConfig{
-		DBName:  cfg.DBName,
-		Host:    cfg.DBHost,
-		Port:    cfg.DBPort,
-		User:    cfg.DBUser,
-		SSLMode: cfg.DBSSLMode,
+	dbCfg := &stdlib.DriverConfig{
+		ConnConfig: pgx.ConnConfig{
+			Host:     cfg.DBHost,
+			User:     cfg.DBUser,
+			Password: cfg.DBPass,
+			Database: cfg.DBName,
+			Port:     cfg.DBPort,
+		},
 	}
-	db, err := model.NewDB(c)
+	stdlib.RegisterDriverConfig(dbCfg)
+	db, err := sql.Open("pgx", dbCfg.ConnectionString(""))
 	if err != nil {
 		return nil, err
 	}

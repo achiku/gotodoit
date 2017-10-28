@@ -17,7 +17,7 @@ type Config struct {
 	DBUser         string       `toml:"db_user"`
 	DBHost         string       `toml:"db_host"`
 	DBPass         string       `toml:"db_pass"`
-	DBPort         string       `toml:"db_port"`
+	DBPort         uint16       `toml:"db_port"`
 	DBSSLMode      string       `toml:"db_ssl_mode"`
 	PasswordPepper string       `toml:"password_pepper"`
 	EstcConfig     *estc.Config `toml:"estc"`
